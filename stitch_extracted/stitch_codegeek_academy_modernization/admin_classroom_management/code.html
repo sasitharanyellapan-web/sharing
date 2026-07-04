@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Code Geek Academy | Admin Classroom Management</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#1a365d",
+                    "surface-variant": "#e0e3e5",
+                    "secondary-fixed-dim": "#6bdc96",
+                    "surface-dim": "#d7dadc",
+                    "on-tertiary-fixed-variant": "#703700",
+                    "surface-container-high": "#e5e9eb",
+                    "on-secondary-container": "#00723f",
+                    "on-primary-fixed-variant": "#2d476f",
+                    "error-container": "#ffdad6",
+                    "on-primary-container": "#86a0cd",
+                    "on-tertiary-fixed": "#301400",
+                    "inverse-primary": "#adc7f7",
+                    "on-primary-fixed": "#001b3c",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#85f6ad",
+                    "surface": "#f7fafc",
+                    "tertiary-container": "#572900",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eef1f3",
+                    "primary-fixed-dim": "#adc7f7",
+                    "surface-tint": "#455f88",
+                    "on-tertiary-container": "#e88532",
+                    "error": "#ba1a1a",
+                    "glass-surface": "rgba(255, 255, 255, 0.7)",
+                    "secondary-fixed": "#88f9b0",
+                    "on-secondary-fixed-variant": "#00522c",
+                    "tertiary-fixed": "#ffdcc5",
+                    "tertiary": "#371800",
+                    "energetic-orange": "#ED8936",
+                    "on-background": "#181c1e",
+                    "inverse-surface": "#2d3133",
+                    "tertiary-fixed-dim": "#ffb783",
+                    "glass-border": "rgba(255, 255, 255, 0.4)",
+                    "surface-container-low": "#f1f4f6",
+                    "deep-navy": "#1A365D",
+                    "outline-variant": "#c4c6cf",
+                    "on-surface": "#181c1e",
+                    "on-surface-variant": "#43474e",
+                    "vibrant-green": "#48BB78",
+                    "surface-bright": "#f7fafc",
+                    "primary": "#002045",
+                    "surface-container": "#ebeef0",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary": "#006d3c",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f7fafc",
+                    "on-error-container": "#93000a",
+                    "outline": "#74777f",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#d6e3ff",
+                    "on-secondary-fixed": "#00210f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "margin-mobile": "20px",
+                    "section-gap": "120px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "gutter": "24px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "label-bold": ["Inter"],
+                    "headline-sm": ["Montserrat"],
+                    "display-lg-mobile": ["Montserrat"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Montserrat"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Montserrat"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "display-lg-mobile": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7fafc;
+            color: #181c1e;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -20px rgba(26, 54, 93, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-pill {
+            background: #85f6ad;
+            color: #00723f;
+        }
+        /* Custom scrollbar for glass effect */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 32, 69, 0.1); border-radius: 10px; }
+        
+        #modal-overlay {
+            background: rgba(0, 32, 69, 0.4);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- Background Atmospheric Glow -->
+<div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+<div class="absolute -top-24 -left-24 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px]"></div>
+<div class="absolute top-1/2 -right-48 w-[800px] h-[800px] bg-secondary/5 rounded-full blur-[160px]"></div>
+</div>
+<!-- SideNavBar (Mandatory Shell) -->
+<nav class="h-screen w-72 flex-col fixed left-0 top-0 border-r border-glass-border backdrop-blur-md bg-glass-surface/30 shadow-md shadow-primary/5 p-stack-lg z-50 flex">
+<div class="flex items-center gap-stack-md mb-stack-lg">
+<div class="w-12 h-12 rounded-xl bg-primary flex items-center justify-center overflow-hidden">
+<img class="w-10 h-10 object-contain" data-alt="A professional and sleek logo for a modern coding academy called Code Geek Academy. The design features a stylized binary tree integrated with a glowing circuit board pattern, using a palette of deep navy blue and vibrant electric green. The lighting is crisp and academic, set against a clean white light-mode background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiA6WyE-9JbB1OxNCNjTdVrBQ0b1RRxDShY9mA40WlK_qhKm37FdtMnYNYAwwCGor1jkAz8_rAyX854heuhI_x1HgR8gg3M_kn2oTcOPMCTAKyszExZuz4XIgOAid2DmENjnjZgEHAFyq6C79X5iXe1uT__n0cp5ENwiErpYX1Ydq6GXw2IjSikfyneNBR25ovQ997OsB9X3TluBIaHKFNVptwxkMzeGUxA-PBy5PVkUGTXph4WRAleJL5OD8-5cd3iO2oVXf8PhAs"/>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Code Geek Admin</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Management Portal</p>
+</div>
+</div>
+<div class="flex flex-col gap-stack-sm flex-1">
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary hover:translate-x-1 hover:bg-surface-variant/50 transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-bold text-label-bold">Dashboard</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary hover:translate-x-1 hover:bg-surface-variant/50 transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">dynamic_form</span>
+<span class="font-label-bold text-label-bold">Form Builder</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-stack-md px-gutter py-stack-md bg-secondary-container text-on-secondary-container rounded-xl transition-all duration-300 scale-95" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="font-label-bold text-label-bold">Classrooms</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary hover:translate-x-1 hover:bg-surface-variant/50 transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">person_search</span>
+<span class="font-label-bold text-label-bold">Students</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary hover:translate-x-1 hover:bg-surface-variant/50 transition-all rounded-xl" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-bold text-label-bold">Settings</span>
+</a>
+</div>
+<div class="mt-auto flex flex-col gap-stack-sm pt-stack-lg border-t border-glass-border">
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant/60 hover:text-vibrant-green transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-sm text-label-sm">Support</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant/60 hover:text-error transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-sm text-label-sm">Sign Out</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="ml-72 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-gutter w-full sticky top-0 z-40 bg-surface/80 backdrop-blur-md h-16 border-b border-glass-border">
+<div class="flex items-center gap-stack-md">
+<div class="relative">
+<span class="absolute inset-y-0 left-3 flex items-center text-on-surface-variant/40">
+<span class="material-symbols-outlined">search</span>
+</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full w-64 focus:ring-2 focus:ring-vibrant-green transition-all text-body-md font-body-md" placeholder="Search classrooms..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="p-2 text-on-surface-variant hover:text-energetic-orange transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-energetic-orange transition-colors">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+<div class="flex items-center gap-stack-sm ml-4 pl-4 border-l border-glass-border">
+<div class="text-right">
+<p class="font-label-bold text-label-bold text-primary">Admin User</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Super Admin</p>
+</div>
+<img class="w-10 h-10 rounded-full border-2 border-vibrant-green object-cover" data-alt="A professional portrait of a tech-savvy female administrator in a modern office environment. She is smiling confidently, wearing smart business casual attire. The background is a brightly lit, blurred high-tech workspace with glass partitions and soft warm lighting, reflecting an innovative and educational atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeQDBYLQn75sSoHFwz5FL_3vfGDVgJmVzaLBNW7plTogHG9sqrvhT5n-6TXPpnakEsjbsFCQeO0NWm_lc5DFyWh5M7Z-8PL8m4-rKwW6VsetdYxT6x_2-vbd3ym_VYmWNjV3-BSUzgblw639nq16hBaeAhx1dwrDwv4ECBtoS971qTzzMqeaS6RxaS8e8Fs8TzVC5xrjl4NhIbOGwEVh_Y2rmjOrQjEl6NzLfdj1sBaLpJbrLV4Y9UqmkX4RDcBkU3p0yojG8wWds3"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<section class="p-stack-lg flex-1 max-w-container-max mx-auto w-full">
+<!-- Hero Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-stack-md mb-stack-lg">
+<div>
+<span class="font-label-bold text-label-bold text-energetic-orange uppercase tracking-widest">Core Academic Ops</span>
+<h2 class="font-display-lg text-headline-md md:text-display-lg text-primary mt-2">Classroom Management</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 max-w-2xl">Monitor all active teaching environments, schedules, and faculty assignments in real-time.</p>
+</div>
+<button class="bg-primary text-white px-stack-lg py-4 rounded-full font-label-bold text-label-bold flex items-center gap-2 hover:scale-105 hover:shadow-xl hover:shadow-primary/20 transition-all" onclick="toggleModal(true)">
+<span class="material-symbols-outlined">add_circle</span>
+                    New Classroom
+                </button>
+</div>
+<!-- Dashboard Stats Bento Grid (Mini) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-stack-md mb-stack-lg">
+<div class="glass-card p-stack-md rounded-3xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-primary-fixed-dim/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">meeting_room</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant/60">Total Rooms</p>
+<p class="text-headline-sm font-headline-sm text-primary">24</p>
+</div>
+</div>
+<div class="glass-card p-stack-md rounded-3xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">group</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant/60">Active Classes</p>
+<p class="text-headline-sm font-headline-sm text-primary">18</p>
+</div>
+</div>
+<div class="glass-card p-stack-md rounded-3xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-tertiary-fixed/20 flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined">person_celebrate</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant/60">Total Teachers</p>
+<p class="text-headline-sm font-headline-sm text-primary">12</p>
+</div>
+</div>
+<div class="glass-card p-stack-md rounded-3xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-2xl bg-error-container/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant/60">Near Capacity</p>
+<p class="text-headline-sm font-headline-sm text-primary">05</p>
+</div>
+</div>
+</div>
+<!-- Classrooms List (Asymmetric Glass Cards) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-stack-lg">
+<!-- Card 1 -->
+<div class="glass-card p-8 rounded-[2rem] flex flex-col md:flex-row gap-6">
+<div class="md:w-1/3 h-48 md:h-auto rounded-2xl overflow-hidden relative group">
+<img class="w-full h-full object-cover" data-alt="A modern, futuristic classroom interior at a coding academy. The room features ergonomic white seating, long sleek wooden tables, and large wall-mounted monitors displaying vibrant code and data visualizations. The lighting is a blend of natural daylight and soft blue accent LEDs, creating a high-energy but focused educational environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0EDqR-4pFxUWkSBBKpviQ660ZYa356noYxaT9MUdrXECMFGOZAPpqBAosLS0WI5kRwwWkGL-Q59_4uhr5cYoZ235hof--pu-T3I_zodQFQIH7G5BFaB033Hvhp4E5LwyaPZIJWQRhuuqIZ7bUmjqsbhXRd1iPJZWzX-2nuGEFtk9InhqXAeaqtotZTJRs43nUUtCXvR2V34fZ5MzTmSU0-PSsL0MmmTY1iog8tyq0uOyFUIdjsfLJIYHiH1TmeKbEijUuNXhJMwP2"/>
+<div class="absolute top-3 left-3 bg-vibrant-green text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Active</div>
+</div>
+<div class="md:w-2/3 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Python Mastery Lab</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Room: Alpha-01</p>
+</div>
+<div class="bg-primary-fixed/30 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">terminal</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant/40 text-sm">person</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Mr. Azizul Hakim</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant/40 text-sm">schedule</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Mon, Wed (2-4 PM)</span>
+</div>
+</div>
+</div>
+<div class="mt-8 flex items-center justify-between">
+<div class="w-1/2">
+<div class="flex justify-between mb-1">
+<span class="text-[10px] font-bold text-on-surface-variant/60">CAPACITY (18/20)</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-vibrant-green w-[90%]"></div>
+</div>
+</div>
+<button class="text-primary hover:text-energetic-orange transition-colors flex items-center gap-1 font-label-bold text-label-bold">
+                                Details <span class="material-symbols-outlined text-base">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card p-8 rounded-[2rem] flex flex-col md:flex-row gap-6">
+<div class="md:w-1/3 h-48 md:h-auto rounded-2xl overflow-hidden relative group">
+<img class="w-full h-full object-cover" data-alt="A specialized robotics and hardware laboratory in a modern school setting. Workbenches are equipped with soldering stations, microcontrollers, and laptop computers. Translucent storage bins filled with electronic components line the back wall. The aesthetic is clean, industrial, and brightly lit with high-key studio lighting, emphasizing technical precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPFrHxG0NGkOsniCSHtTa2Tp0rl_QsfND8hUQD-IX0Ce7fQbRcV7iEAck9OIz1x-9q8v8ZFEbrgYZByqFOVHXjvasGve9lclWGzrqzTvM8fZuO7hnynqzK4ZRoAtJgdqR4ILZ6rvYwR9nbA67vtoge0zV_iWnC6wrhHcs_wIC3-znuU22WKtSuvxEg7OWGTKaZqU7buheBH0v_-HmSOBvQLzywwP_KYpBA4ABZHcZ_uWmuqYHCfjOFlfhkyIJWChRfe2qk1IinUJvD"/>
+<div class="absolute top-3 left-3 bg-energetic-orange text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Starting Soon</div>
+</div>
+<div class="md:w-2/3 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Web Dev Bootcamp</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Room: Beta-04</p>
+</div>
+<div class="bg-secondary-container/30 p-2 rounded-lg">
+<span class="material-symbols-outlined text-secondary">html</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant/40 text-sm">person</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Ms. Sarah Lim</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant/40 text-sm">schedule</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Tue, Thu (9-11 AM)</span>
+</div>
+</div>
+</div>
+<div class="mt-8 flex items-center justify-between">
+<div class="w-1/2">
+<div class="flex justify-between mb-1">
+<span class="text-[10px] font-bold text-on-surface-variant/60">CAPACITY (12/25)</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[48%]"></div>
+</div>
+</div>
+<button class="text-primary hover:text-energetic-orange transition-colors flex items-center gap-1 font-label-bold text-label-bold">
+                                Details <span class="material-symbols-outlined text-base">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card p-8 rounded-[2rem] flex flex-col md:flex-row gap-6">
+<div class="md:w-1/3 h-48 md:h-auto rounded-2xl overflow-hidden relative group">
+<img class="w-full h-full object-cover" data-alt="A creative digital design studio within a coding school. Apple iMacs are lined up on white desks. The walls are decorated with modern infographic posters and wireframe sketches. Soft purple and pink atmospheric lighting complements the clean white furniture. The mood is creative and technologically sophisticated, targeting aspiring UI/UX designers." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBi9yX9tN7-ZEojplKgF0IFrsClGQ_mceFcZ8aqBlr6LpQ83BAsZwuIDbGBoCJ7Cql2w5wy1qbgf8NGyueVvA8WClHJY6SbnPd8MMFtzvEUCD6H5usXxjZhyrzoqGPv3caIsWG8mIdz-YUrZCVDOzPWOOEVWiQJF7ZHjsZJEWt5AOzJPyl3_46bZIhTEcc8OCGFFRksNMT6s8Fts3dd0VevPnVL93IIT0DREgzykhHGUowvHHaOR6GabxX59TFfXUJNDRuLHU1qZNgv"/>
+<div class="absolute top-3 left-3 bg-vibrant-green text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Active</div>
+</div>
+<div class="md:w-2/3 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">UI/UX Design Studio</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">Room: Creative-X</p>
+</div>
+<div class="bg-tertiary-fixed/30 p-2 rounded-lg">
+<span class="material-symbols-outlined text-on-tertiary-container">draw</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant/40 text-sm">person</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Mr. David Chen</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant/40 text-sm">schedule</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Fri (2-5 PM)</span>
+</div>
+</div>
+</div>
+<div class="mt-8 flex items-center justify-between">
+<div class="w-1/2">
+<div class="flex justify-between mb-1">
+<span class="text-[10px] font-bold text-on-surface-variant/60">CAPACITY (15/15)</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-energetic-orange w-full"></div>
+</div>
+</div>
+<button class="text-primary hover:text-energetic-orange transition-colors flex items-center gap-1 font-label-bold text-label-bold">
+                                Details <span class="material-symbols-outlined text-base">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="glass-card p-8 rounded-[2rem] border-dashed border-2 border-primary/20 flex flex-col items-center justify-center text-center group cursor-pointer hover:border-primary transition-all" onclick="toggleModal(true)">
+<div class="w-20 h-20 rounded-full bg-surface-container-low flex items-center justify-center mb-4 group-hover:bg-primary-fixed/30 transition-colors">
+<span class="material-symbols-outlined text-primary text-4xl">add</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Expand Academy</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[240px] mt-2">Open a new classroom to accommodate growing student demand.</p>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="flex justify-between items-center px-gutter py-stack-md border-t border-glass-border/50 max-w-container-max w-full mx-auto">
+<p class="font-label-sm text-label-sm text-on-surface-variant/60">© 2024 Code Geek Academy | Kinetic Glass Tech Framework</p>
+<div class="flex gap-stack-lg">
+<a class="font-label-sm text-label-sm text-on-surface-variant/60 hover:text-vibrant-green transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant/60 hover:text-vibrant-green transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant/60 hover:text-vibrant-green transition-colors" href="#">API Documentation</a>
+</div>
+</footer>
+</main>
+<!-- Modal Registration Form -->
+<div class="fixed inset-0 z-[100] hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4" id="modal-overlay">
+<div class="bg-white/90 backdrop-blur-2xl rounded-[2.5rem] w-full max-w-2xl shadow-2xl overflow-hidden transform translate-y-10 transition-transform duration-300" id="modal-content">
+<!-- Modal Header -->
+<div class="p-8 border-b border-glass-border flex justify-between items-center bg-primary text-white">
+<div>
+<h3 class="font-headline-md text-headline-md">New Classroom Registration</h3>
+<p class="font-label-sm text-label-sm opacity-80">Initialize a new academic environment</p>
+</div>
+<button class="p-2 hover:bg-white/10 rounded-full transition-colors" onclick="toggleModal(false)">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body (Form) -->
+<form class="p-8 grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-primary ml-1">Classroom Name</label>
+<input class="rounded-2xl border-primary/20 bg-surface-container-low p-3 focus:border-vibrant-green focus:ring-vibrant-green focus:ring-2 transition-all" placeholder="e.g., Advanced JavaScript" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-primary ml-1">Assigned Teacher</label>
+<select class="rounded-2xl border-primary/20 bg-surface-container-low p-3 focus:border-vibrant-green transition-all">
+<option>Select a teacher...</option>
+<option>Mr. Azizul Hakim</option>
+<option>Ms. Sarah Lim</option>
+<option>Mr. David Chen</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-primary ml-1">Schedule</label>
+<div class="relative">
+<input class="w-full rounded-2xl border-primary/20 bg-surface-container-low p-3 focus:border-vibrant-green transition-all" placeholder="Mon/Wed, 10 AM - 12 PM" type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-3 text-on-surface-variant/40">calendar_today</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-primary ml-1">Location / Room</label>
+<input class="rounded-2xl border-primary/20 bg-surface-container-low p-3 focus:border-vibrant-green transition-all" placeholder="e.g., Room Alpha-03" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-primary ml-1">Max Capacity</label>
+<input class="rounded-2xl border-primary/20 bg-surface-container-low p-3 focus:border-vibrant-green transition-all" type="number" value="20"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-bold text-label-bold text-primary ml-1">Status</label>
+<div class="flex gap-4 p-3 bg-surface-container-low rounded-2xl">
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="text-vibrant-green focus:ring-vibrant-green" name="status" type="radio"/>
+<span class="text-label-sm">Active</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="text-energetic-orange focus:ring-energetic-orange" name="status" type="radio"/>
+<span class="text-label-sm">Scheduled</span>
+</label>
+</div>
+</div>
+<div class="md:col-span-2 mt-4 pt-4 border-t border-glass-border flex justify-end gap-stack-md">
+<button class="px-6 py-3 rounded-full font-label-bold text-label-bold text-primary hover:bg-surface-container-low transition-all" onclick="toggleModal(false)" type="button">Cancel</button>
+<button class="px-8 py-3 rounded-full font-label-bold text-label-bold bg-secondary text-white hover:scale-105 shadow-lg shadow-secondary/20 transition-all" type="submit">Initialize Classroom</button>
+</div>
+</form>
+</div>
+</div>
+<script>
+        function toggleModal(show) {
+            const overlay = document.getElementById('modal-overlay');
+            const content = document.getElementById('modal-content');
+            if (show) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => {
+                    overlay.classList.remove('opacity-0');
+                    content.classList.remove('translate-y-10');
+                }, 10);
+            } else {
+                overlay.classList.add('opacity-0');
+                content.classList.add('translate-y-10');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') toggleModal(false);
+        });
+
+        // Close modal on background click
+        document.getElementById('modal-overlay').addEventListener('click', (e) => {
+            if (e.target.id === 'modal-overlay') toggleModal(false);
+        });
+    </script>
+</body></html>

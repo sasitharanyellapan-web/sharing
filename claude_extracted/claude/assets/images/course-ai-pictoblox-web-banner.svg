@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1414" height="520" viewBox="0 0 1414 520" role="img" aria-labelledby="title desc">
+  <title id="title">Artificial Intelligence</title>
+  <desc id="desc">Code Geek Academy course banner for Artificial Intelligence.</desc>
+  <rect width="1414" height="520" fill="#ffffff"/>
+  <circle cx="72" cy="48" r="190" fill="none" stroke="#8b9bb1" stroke-width="8" opacity="0.5"/>
+  <circle cx="1322" cy="470" r="230" fill="none" stroke="#8b9bb1" stroke-width="8" opacity="0.45"/>
+  <g fill="#173b72">
+    <rect x="930" y="0" width="78" height="78"/>
+    <rect x="1084" y="0" width="78" height="78"/>
+    <rect x="1238" y="0" width="78" height="78"/>
+    <rect x="1007" y="78" width="78" height="78"/>
+    <rect x="1161" y="78" width="78" height="78"/>
+  </g>
+  <text x="140" y="132" font-family="Montserrat, Arial, sans-serif" font-size="42" font-weight="700" fill="#173b72">code geek academy</text>
+  <text x="140" y="205" font-family="Montserrat, Arial, sans-serif" font-size="58" font-weight="800" fill="#f04a2a">ARTIFICIAL INTELLIGENCE (AI)</text>
+  <text x="140" y="274" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700" fill="#48bb78">PictoBlox • Vision • Speech • Machine learning</text>
+  <g transform="translate(142 326)" fill="none" stroke="#173b72" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="96" cy="70" r="58" fill="#ffffff"/>
+    <path d="M96 12v-28m0 168v-28m58-58h28M10 70h28"/>
+    <path d="M63 70h66M96 37v66"/>
+    <circle cx="96" cy="70" r="12" fill="#48bb78" stroke="none"/>
+    <circle cx="63" cy="70" r="8" fill="#f04a2a" stroke="none"/>
+    <circle cx="129" cy="70" r="8" fill="#f04a2a" stroke="none"/>
+    <circle cx="96" cy="37" r="8" fill="#48bb78" stroke="none"/>
+    <circle cx="96" cy="103" r="8" fill="#48bb78" stroke="none"/>
+  </g>
+  <text x="1040" y="205" font-family="Montserrat, Arial, sans-serif" font-size="42" font-weight="800" fill="#173b72">2026/27</text>
+</svg>

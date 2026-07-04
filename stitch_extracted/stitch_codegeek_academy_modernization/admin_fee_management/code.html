@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Fee Management | Code Geek Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Montserrat:wght@600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#1a365d",
+                    "surface-variant": "#e0e3e5",
+                    "secondary-fixed-dim": "#6bdc96",
+                    "surface-dim": "#d7dadc",
+                    "on-tertiary-fixed-variant": "#703700",
+                    "surface-container-high": "#e5e9eb",
+                    "on-secondary-container": "#00723f",
+                    "on-primary-fixed-variant": "#2d476f",
+                    "error-container": "#ffdad6",
+                    "on-primary-container": "#86a0cd",
+                    "on-tertiary-fixed": "#301400",
+                    "inverse-primary": "#adc7f7",
+                    "on-primary-fixed": "#001b3c",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#85f6ad",
+                    "surface": "#f7fafc",
+                    "tertiary-container": "#572900",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eef1f3",
+                    "primary-fixed-dim": "#adc7f7",
+                    "surface-tint": "#455f88",
+                    "on-tertiary-container": "#e88532",
+                    "error": "#ba1a1a",
+                    "glass-surface": "rgba(255, 255, 255, 0.7)",
+                    "secondary-fixed": "#88f9b0",
+                    "on-secondary-fixed-variant": "#00522c",
+                    "tertiary-fixed": "#ffdcc5",
+                    "tertiary": "#371800",
+                    "energetic-orange": "#ED8936",
+                    "on-background": "#181c1e",
+                    "inverse-surface": "#2d3133",
+                    "tertiary-fixed-dim": "#ffb783",
+                    "glass-border": "rgba(255, 255, 255, 0.4)",
+                    "surface-container-low": "#f1f4f6",
+                    "deep-navy": "#1A365D",
+                    "outline-variant": "#c4c6cf",
+                    "on-surface": "#181c1e",
+                    "on-surface-variant": "#43474e",
+                    "vibrant-green": "#48BB78",
+                    "surface-bright": "#f7fafc",
+                    "primary": "#002045",
+                    "surface-container": "#ebeef0",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary": "#006d3c",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f7fafc",
+                    "on-error-container": "#93000a",
+                    "outline": "#74777f",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#d6e3ff",
+                    "on-secondary-fixed": "#00210f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "margin-mobile": "20px",
+                    "section-gap": "120px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "gutter": "24px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "label-bold": ["Inter"],
+                    "headline-sm": ["Montserrat"],
+                    "display-lg-mobile": ["Montserrat"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Montserrat"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Montserrat"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "display-lg-mobile": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .kinetic-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .kinetic-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(26, 54, 93, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7fafc;
+            background-image: radial-gradient(circle at 0% 0%, rgba(173, 199, 247, 0.15) 0%, transparent 50%),
+                              radial-gradient(circle at 100% 100%, rgba(133, 246, 173, 0.1) 0%, transparent 50%);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-on-surface font-body-md overflow-x-hidden">
+<!-- SideNavBar -->
+<aside class="h-screen w-72 flex-col fixed left-0 top-0 border-r border-glass-border bg-surface-container-lowest/70 backdrop-blur-xl z-50 flex shadow-md shadow-primary/5">
+<div class="h-full flex flex-col p-stack-lg">
+<div class="flex items-center gap-stack-md mb-12">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Code Geek Admin</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant/70">Management Portal</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all rounded-xl kinetic-hover" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-bold text-label-bold">Dashboard</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all rounded-xl kinetic-hover" href="#">
+<span class="material-symbols-outlined" data-icon="dynamic_form">dynamic_form</span>
+<span class="font-label-bold text-label-bold">Form Builder</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all rounded-xl kinetic-hover" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-bold text-label-bold">Classrooms</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md bg-secondary-container text-on-secondary-container rounded-xl transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+<span class="font-label-bold text-label-bold">Students</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary hover:bg-surface-variant/50 transition-all rounded-xl kinetic-hover" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-bold text-label-bold">Settings</span>
+</a>
+</nav>
+<button class="mt-8 mb-8 bg-primary text-white py-3 px-6 rounded-full font-label-bold text-label-bold hover:scale-105 transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Registration
+            </button>
+<div class="border-t border-glass-border pt-6 space-y-2">
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label-bold text-label-bold">Support</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-bold text-label-bold">Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-72 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-gutter w-full sticky top-0 z-40 bg-surface/80 backdrop-blur-md h-16 border-b border-glass-border">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 focus:ring-2 focus:ring-vibrant-green transition-all text-body-md font-body-md" placeholder="Search student records..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4 items-center border-r border-glass-border pr-6">
+<button class="text-on-surface-variant hover:text-energetic-orange transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-energetic-orange transition-colors">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="font-label-bold text-label-bold text-primary">Admin User</p>
+<p class="text-[10px] uppercase tracking-wider text-on-surface-variant font-bold">Head of Finance</p>
+</div>
+<img class="w-10 h-10 rounded-full border-2 border-vibrant-green object-cover" data-alt="A professional headshot of a middle-aged woman with glasses and a friendly smile, dressed in a sleek charcoal blazer. She is set against a soft-focus office background with tech gadgets and warm ambient lighting. The style is professional, high-definition corporate photography with a modern, approachable feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAsSjKp82a3kZKLiuuepdzvlTsdHBvHJPjP-d88yGB65TnCDWZb6yv0HdgBssTnVNWBV0fgwZYaag7okixi062yi3hnDfrUEedRoY3GJ2bWdSnADuhSTMxlblJhMQqI0_fck4Nk5WY77OIaoaA48mIXAnk8x1QjQtD4fAJ-UEOs0c7H1cRg5Oh4nS4wgVczhO6RfGUNntNk8f82LeORTiXM8jmiexf5Mx6vXAKOuhsuJIqZbt4dmY4lRY8y0P55V2uB8Jd3dRtplie"/>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="p-stack-lg max-w-container-max w-full mx-auto space-y-stack-lg">
+<!-- Page Header -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Student Fee Management</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Review monthly collections, outstanding balances, and payment history.</p>
+</div>
+<div class="flex gap-stack-md">
+<button class="glass-card px-6 py-2.5 rounded-full font-label-bold text-label-bold text-primary flex items-center gap-2 kinetic-hover">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                        Export CSV
+                    </button>
+<button class="bg-secondary text-on-secondary px-6 py-2.5 rounded-full font-label-bold text-label-bold flex items-center gap-2 kinetic-hover">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+                        Bulk Generate Receipts
+                    </button>
+</div>
+</div>
+<!-- Dashboard Quick Stats -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="glass-card p-stack-md rounded-2xl kinetic-hover group">
+<p class="text-on-surface-variant font-label-bold text-label-bold mb-1">Total Revenue (MTD)</p>
+<h3 class="text-headline-sm font-headline-sm text-primary">$42,500.00</h3>
+<div class="mt-4 flex items-center text-vibrant-green gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span class="text-label-sm font-label-sm">+12% vs last month</span>
+</div>
+</div>
+<div class="glass-card p-stack-md rounded-2xl kinetic-hover group">
+<p class="text-on-surface-variant font-label-bold text-label-bold mb-1">Outstanding Fees</p>
+<h3 class="text-headline-sm font-headline-sm text-error">$8,240.00</h3>
+<div class="mt-4 flex items-center text-on-surface-variant gap-1">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span class="text-label-sm font-label-sm">42 students pending</span>
+</div>
+</div>
+<div class="glass-card p-stack-md rounded-2xl kinetic-hover group">
+<p class="text-on-surface-variant font-label-bold text-label-bold mb-1">Collection Rate</p>
+<h3 class="text-headline-sm font-headline-sm text-secondary">94.2%</h3>
+<div class="mt-4 h-1.5 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-vibrant-green w-[94.2%]"></div>
+</div>
+</div>
+<div class="glass-card p-stack-md rounded-2xl kinetic-hover group">
+<p class="text-on-surface-variant font-label-bold text-label-bold mb-1">Receipts Issued</p>
+<h3 class="text-headline-sm font-headline-sm text-primary">158/162</h3>
+<div class="mt-4 flex items-center text-energetic-orange gap-1">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span class="text-label-sm font-label-sm">4 Pending processing</span>
+</div>
+</div>
+</div>
+<!-- Filters Section -->
+<div class="glass-card p-stack-md rounded-2xl flex flex-wrap items-center gap-gutter">
+<div class="flex-1 min-w-[240px]">
+<label class="font-label-bold text-label-bold text-on-surface-variant block mb-2 px-2">Student Search</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">person</span>
+<input class="w-full bg-white/50 border border-glass-border rounded-xl py-2 pl-10 focus:ring-2 focus:ring-vibrant-green" placeholder="Type student name..." type="text"/>
+</div>
+</div>
+<div class="w-64">
+<label class="font-label-bold text-label-bold text-on-surface-variant block mb-2 px-2">Class / Program</label>
+<select class="w-full bg-white/50 border border-glass-border rounded-xl py-2 focus:ring-2 focus:ring-vibrant-green">
+<option>All Classes</option>
+<option>Python Foundations</option>
+<option>Full-stack Web Development</option>
+<option>Data Science Prep</option>
+<option>Cybersecurity 101</option>
+</select>
+</div>
+<div class="w-48">
+<label class="font-label-bold text-label-bold text-on-surface-variant block mb-2 px-2">Status</label>
+<select class="w-full bg-white/50 border border-glass-border rounded-xl py-2 focus:ring-2 focus:ring-vibrant-green">
+<option>All Statuses</option>
+<option>Paid</option>
+<option>Outstanding</option>
+<option>Overdue</option>
+</select>
+</div>
+<div class="flex items-end h-full pt-6">
+<button class="bg-primary-container text-white px-6 py-2 rounded-xl font-label-bold text-label-bold kinetic-hover">Apply Filters</button>
+</div>
+</div>
+<!-- Data Table Section -->
+<div class="glass-card rounded-2xl overflow-hidden shadow-xl border border-glass-border">
+<table class="w-full border-collapse">
+<thead>
+<tr class="bg-primary/5 text-left border-b border-glass-border">
+<th class="px-gutter py-stack-md font-label-bold text-label-bold text-primary">Student Name</th>
+<th class="px-gutter py-stack-md font-label-bold text-label-bold text-primary">Class</th>
+<th class="px-gutter py-stack-md font-label-bold text-label-bold text-primary">Month</th>
+<th class="px-gutter py-stack-md font-label-bold text-label-bold text-primary">Amount</th>
+<th class="px-gutter py-stack-md font-label-bold text-label-bold text-primary">Status</th>
+<th class="px-gutter py-stack-md font-label-bold text-label-bold text-primary text-center">Receipt</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-glass-border/30">
+<tr class="hover:bg-white/40 transition-colors">
+<td class="px-gutter py-stack-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-xs">AL</div>
+<p class="font-label-bold text-primary">Alexander Low</p>
+</div>
+</td>
+<td class="px-gutter py-stack-md text-on-surface-variant font-body-md">Python Foundations</td>
+<td class="px-gutter py-stack-md text-on-surface-variant font-body-md">October 2024</td>
+<td class="px-gutter py-stack-md font-label-bold text-primary">$450.00</td>
+<td class="px-gutter py-stack-md">
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold uppercase tracking-wide">Paid</span>
+</td>
+<td class="px-gutter py-stack-md text-center">
+<a class="text-primary hover:text-vibrant-green transition-colors inline-flex items-center gap-1 font-label-bold text-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">visibility</span> View
+                                </a>
+</td>
+</tr>
+<tr class="hover:bg-white/40 transition-colors">
+<td class="px-gutter py-stack-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center font-bold text-xs">SM</div>
+<p class="font-label-bold text-primary">Sarah Miller</p>
+</div>
+</td>
+<td class="px-gutter py-stack-md text-on-surface-variant font-body-md">Web Development</td>
+<td class="px-gutter py-stack-md text-on-surface-variant font-body-md">October 2024</td>
+<td class="px-gutter py-stack-md font-label-bold text-primary">$600.00</td>
+<td class="px-gutter py-stack-md">
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container text-[11px] font-bold uppercase tracking-wide">Outstanding</span>
+</td>
+<td class="px-gutter py-stack-md text-center">
+<button class="text-on-surface-variant/40 cursor-not-allowed inline-flex items-center gap-1 font-label-bold text-sm">
+<span class="material-symbols-outlined text-[18px]">block</span> N/A
+                                </button>
+</td>
+</tr>
+<tr class="hover:bg-white/40 transition-colors">
+<td class="px-gutter py-stack-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-bold text-xs">JK</div>
+<p class="font-label-bold text-primary">Jordan Kim</p>
+</div>
+</td>
+<td class="px-gutter py-stack-md text-on-surface-variant font-body-md">Data Science</td>
+<td class="px-gutter py-stack-md text-on-surface-variant font-body-md">September 2024</td>
+<td class="px-gutter py-stack-md font-label-bold text-primary">$750.00</td>
+<td class="px-gutter py-stack-md">
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold uppercase tracking-wide">Paid</span>
+</td>
+<td class="px-gutter py-stack-md text-center">
+<a class="text-primary hover:text-vibrant-green transition-colors inline-flex items-center gap-1 font-label-bold text-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">download</span> Receipt
+                                </a>
+</td>
+</tr>
+<tr class="hover:bg-white/40 transition-colors">
+<td class="px-gutter py-stack-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-primary flex items-center justify-center font-bold text-xs">EC</div>
+<p class="font-label-bold text-primary">Elena Chen</p>
+</div>
+</td>
+<td class="px-gutter py-stack-md text-on-surface-variant font-body-md">Python Foundations</td>
+<td class="px-gutter py-stack-md text-on-surface-variant font-body-md">October 2024</td>
+<td class="px-gutter py-stack-md font-label-bold text-primary">$450.00</td>
+<td class="px-gutter py-stack-md">
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[11px] font-bold uppercase tracking-wide">Paid</span>
+</td>
+<td class="px-gutter py-stack-md text-center">
+<a class="text-primary hover:text-vibrant-green transition-colors inline-flex items-center gap-1 font-label-bold text-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">visibility</span> View
+                                </a>
+</td>
+</tr>
+<tr class="hover:bg-white/40 transition-colors">
+<td class="px-gutter py-stack-md">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-xs">MV</div>
+<p class="font-label-bold text-primary">Marcus Vance</p>
+</div>
+</td>
+<td class="px-gutter py-stack-md text-on-surface-variant font-body-md">Cybersecurity 101</td>
+<td class="px-gutter py-stack-md text-on-surface-variant font-body-md">October 2024</td>
+<td class="px-gutter py-stack-md font-label-bold text-primary">$550.00</td>
+<td class="px-gutter py-stack-md">
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container text-[11px] font-bold uppercase tracking-wide">Outstanding</span>
+</td>
+<td class="px-gutter py-stack-md text-center">
+<button class="text-energetic-orange hover:underline inline-flex items-center gap-1 font-label-bold text-sm">
+<span class="material-symbols-outlined text-[18px]">mail</span> Remind
+                                </button>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="px-gutter py-stack-md bg-white/50 flex justify-between items-center border-t border-glass-border">
+<p class="text-label-sm font-label-sm text-on-surface-variant">Showing 1-10 of 248 records</p>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-glass-border hover:bg-white transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-white font-label-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-glass-border hover:bg-white transition-colors font-label-bold">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-glass-border hover:bg-white transition-colors font-label-bold">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-glass-border hover:bg-white transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="mt-auto flex justify-between items-center px-gutter py-stack-md w-full border-t border-glass-border/50 text-on-surface-variant/60 font-label-sm text-label-sm">
+<div>© 2024 Code Geek Academy | Kinetic Glass Tech Framework</div>
+<div class="flex gap-stack-md">
+<a class="hover:text-vibrant-green transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-vibrant-green transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-vibrant-green transition-colors" href="#">API Documentation</a>
+</div>
+</footer>
+</main>
+<!-- FAB for quick action -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-energetic-orange text-white rounded-full shadow-2xl flex items-center justify-center kinetic-hover z-50 group">
+<span class="material-symbols-outlined text-[32px] group-hover:rotate-90 transition-transform duration-300">add</span>
+</button>
+<script>
+        // Simple micro-interaction for row selection
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                // Highlight row
+                document.querySelectorAll('tbody tr').forEach(r => r.classList.remove('bg-secondary-container/10'));
+                row.classList.add('bg-secondary-container/10');
+            });
+        });
+
+        // Atmospheric parallax effect on background
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            document.body.style.backgroundPosition = `${x * 20}px ${y * 20}px`;
+        });
+    </script>
+</body></html>

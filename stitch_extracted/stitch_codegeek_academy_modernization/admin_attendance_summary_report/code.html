@@ -1,0 +1,572 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Attendance Summary Report | Code Geek Academy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Inter:wght@400;500;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Montserrat:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .glass-sidebar {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+        }
+        body {
+            background-color: #f7fafc;
+            color: #181c1e;
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a0aec0; }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#181c1e",
+                    "primary": "#002045",
+                    "tertiary-container": "#572900",
+                    "inverse-on-surface": "#eef1f3",
+                    "surface-container-high": "#e5e9eb",
+                    "deep-navy": "#1A365D",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-bright": "#f7fafc",
+                    "glass-surface": "rgba(255, 255, 255, 0.7)",
+                    "energetic-orange": "#ED8936",
+                    "primary-fixed-dim": "#adc7f7",
+                    "tertiary": "#371800",
+                    "secondary": "#006d3c",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#2d476f",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#703700",
+                    "on-tertiary-fixed": "#301400",
+                    "secondary-fixed": "#88f9b0",
+                    "surface": "#f7fafc",
+                    "vibrant-green": "#48BB78",
+                    "on-secondary-container": "#00723f",
+                    "on-surface-variant": "#43474e",
+                    "on-tertiary-container": "#e88532",
+                    "surface-container-low": "#f1f4f6",
+                    "primary-container": "#1a365d",
+                    "on-secondary-fixed-variant": "#00522c",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "on-secondary-fixed": "#00210f",
+                    "glass-border": "rgba(255, 255, 255, 0.4)",
+                    "inverse-primary": "#adc7f7",
+                    "surface-dim": "#d7dadc",
+                    "secondary-fixed-dim": "#6bdc96",
+                    "on-primary-fixed": "#001b3c",
+                    "on-primary-container": "#86a0cd",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#ffdcc5",
+                    "error": "#ba1a1a",
+                    "background": "#f7fafc",
+                    "tertiary-fixed-dim": "#ffb783",
+                    "secondary-container": "#85f6ad",
+                    "primary-fixed": "#d6e3ff",
+                    "error-container": "#ffdad6",
+                    "on-background": "#181c1e",
+                    "surface-container": "#ebeef0",
+                    "outline-variant": "#c4c6cf",
+                    "on-secondary": "#ffffff",
+                    "surface-tint": "#455f88",
+                    "on-error": "#ffffff",
+                    "outline": "#74777f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "section-gap": "120px",
+                    "stack-sm": "8px",
+                    "gutter": "24px",
+                    "margin-mobile": "20px",
+                    "stack-md": "16px",
+                    "stack-lg": "32px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Montserrat"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Montserrat"],
+                    "display-lg-mobile": ["Montserrat"],
+                    "label-sm": ["Inter"],
+                    "label-bold": ["Inter"],
+                    "display-lg": ["Montserrat"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "display-lg-mobile": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-body-md text-on-surface min-h-screen">
+<!-- SideNavBar Component -->
+<aside class="h-screen w-72 flex-col fixed left-0 top-0 border-r border-glass-border glass-sidebar z-50 flex p-stack-lg shadow-md shadow-primary/5">
+<div class="mb-stack-lg">
+<div class="flex items-center gap-stack-md mb-2">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Code Geek Admin</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant/70 uppercase tracking-widest">Management Portal</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary transition-colors hover:translate-x-1 hover:bg-surface-variant/50 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-bold text-label-bold">Dashboard</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary transition-colors hover:translate-x-1 hover:bg-surface-variant/50 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="dynamic_form">dynamic_form</span>
+<span class="font-label-bold text-label-bold">Form Builder</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary transition-colors hover:translate-x-1 hover:bg-surface-variant/50 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-bold text-label-bold">Classrooms</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md bg-secondary-container text-on-secondary-container rounded-xl transition-all duration-300 scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="person_search">person_search</span>
+<span class="font-label-bold text-label-bold">Students</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary transition-colors hover:translate-x-1 hover:bg-surface-variant/50 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-bold text-label-bold">Settings</span>
+</a>
+</nav>
+<div class="pt-8 mt-auto border-t border-glass-border/30">
+<button class="w-full bg-primary text-white rounded-full py-3 mb-4 font-label-bold flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+                New Registration
+            </button>
+<div class="space-y-2">
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant/60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label-sm text-label-sm">Support</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant/60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-sm text-label-sm">Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-72 min-h-screen flex flex-col">
+<!-- TopAppBar Component -->
+<header class="flex justify-between items-center px-gutter w-full sticky top-0 z-40 bg-surface/80 backdrop-blur-md h-16 border-b border-glass-border">
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="absolute inset-y-0 left-3 flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-size: 20px;">search</span>
+</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-low border border-transparent focus:border-vibrant-green focus:ring-0 rounded-full text-sm w-64 transition-all" placeholder="Search student records..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+<div class="h-8 w-[1px] bg-glass-border mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="font-label-bold text-label-bold text-primary">Admin User</p>
+<p class="text-[10px] text-on-surface-variant font-medium uppercase tracking-tighter">System Overseer</p>
+</div>
+<img class="w-10 h-10 rounded-full border-2 border-primary/20" data-alt="A professional headshot of a modern software engineer wearing a sleek navy blue polo shirt. The lighting is soft and directional, creating a clean corporate portrait aesthetic. The background is a blurred office environment with hints of warm light and minimalist furniture. The subject has a confident, approachable expression, fitting for a tech-driven educational leader." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEfXYWYB87dOaybWMdsEPYdpwe117AOsdVQGniSFetLrSaXlP2KRN8wzSYFzLSJNWv2WRB1rt19tuCRBjQAOxgriCckgoY98gzGUQ-ui7uCr_AWK9z7IASV1m2oVYdmr-fdGQHr_TNDy5MbW5QDaKvl20Be9su8bJBU4O8kzGVMPAuZogL-q4cK9pmZIJGk0ecrRi143sjPK2wZg_hXDejz2CoZVNGVgdmeqadCc86TkwkC8Jaaefo1orpiyugQg1y-FXlZZ4VkOGK">
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="p-gutter max-w-container-max mx-auto w-full flex-1">
+<!-- Breadcrumbs & Header -->
+<div class="mb-stack-lg">
+<nav class="flex text-on-surface-variant/60 font-label-sm text-label-sm mb-2 gap-2 items-center">
+<a class="hover:text-primary" href="#">Students</a>
+<span class="material-symbols-outlined" style="font-size: 14px;">chevron_right</span>
+<a class="hover:text-primary" href="#">Attendance</a>
+<span class="material-symbols-outlined" style="font-size: 14px;">chevron_right</span>
+<span class="text-primary font-bold">Summary Report</span>
+</nav>
+<h2 class="font-headline-md text-headline-md text-primary">Attendance Summary Report</h2>
+</div>
+<!-- Global Filter Bar -->
+<div class="glass-card rounded-2xl p-stack-md mb-stack-lg flex flex-wrap items-center justify-between gap-stack-md" style="box-shadow: rgba(0, 32, 69, 0.1) 0px 20px 40px;">
+<div class="flex flex-wrap items-center gap-stack-md">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-on-surface-variant ml-2">Classroom</label>
+<select class="bg-surface-container-low border-none rounded-xl font-label-bold text-label-bold px-4 py-2 focus:ring-2 focus:ring-vibrant-green cursor-pointer">
+<option>All Classrooms</option>
+<option>Intro to Python (A1)</option>
+<option>Fullstack JS (B2)</option>
+<option>Data Structures (C1)</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+
+
+</div>
+</div>
+<button class="bg-secondary-container text-on-secondary-container hover:bg-secondary hover:text-white px-6 py-3 rounded-full font-label-bold flex items-center gap-2 transition-all shadow-md active:scale-95">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+                    Download PDF Report
+                </button>
+</div>
+<!-- Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-stack-md mb-stack-lg">
+<div class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:translate-y-[-4px] transition-transform duration-300" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 30px;">
+<div class="absolute -right-4 -top-4 w-20 h-20 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-colors"></div>
+<p class="font-label-bold text-on-surface-variant mb-2">Total Classes Conducted</p>
+<div class="flex items-end justify-between">
+<h3 class="font-headline-sm text-headline-sm text-primary">148</h3>
+<span class="text-vibrant-green flex items-center font-label-bold">
+<span class="material-symbols-outlined" style="font-size: 16px;">trending_up</span>
+                            +12%
+                        </span>
+</div>
+<div class="mt-4 h-1 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-4/5"></div>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:translate-y-[-4px] transition-transform duration-300">
+<div class="absolute -right-4 -top-4 w-20 h-20 bg-vibrant-green/5 rounded-full blur-2xl group-hover:bg-vibrant-green/10 transition-colors"></div>
+<p class="font-label-bold text-on-surface-variant mb-2">Overall Attendance Rate</p>
+<div class="flex items-end justify-between">
+<h3 class="font-headline-sm text-headline-sm text-secondary">92.4%</h3>
+<span class="text-vibrant-green flex items-center font-label-bold">
+<span class="material-symbols-outlined" style="font-size: 16px;">trending_up</span>
+                            +1.2%
+                        </span>
+</div>
+<div class="mt-4 h-1 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[92%]"></div>
+</div>
+</div>
+<div class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:translate-y-[-4px] transition-transform duration-300">
+<div class="absolute -right-4 -top-4 w-20 h-20 bg-energetic-orange/5 rounded-full blur-2xl group-hover:bg-energetic-orange/10 transition-colors"></div>
+<p class="font-label-bold text-on-surface-variant mb-2">Most Consistent Class</p>
+<div class="flex items-end justify-between">
+<h3 class="font-headline-sm text-headline-sm text-primary">React Pro</h3>
+<span class="bg-energetic-orange/10 text-energetic-orange px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">Top Tier</span>
+</div>
+<p class="text-label-sm text-on-surface-variant/70 mt-2">Classroom B2 • 98.2% Avg</p>
+</div>
+<div class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:translate-y-[-4px] transition-transform duration-300">
+<div class="absolute -right-4 -top-4 w-20 h-20 bg-error/5 rounded-full blur-2xl group-hover:bg-error/10 transition-colors"></div>
+<p class="font-label-bold text-on-surface-variant mb-2">Students &lt; 75% Attendance</p>
+<div class="flex items-end justify-between">
+<h3 class="font-headline-sm text-headline-sm text-error">12</h3>
+<span class="text-error flex items-center font-label-bold">
+<span class="material-symbols-outlined" style="font-size: 16px;">warning</span>
+                            Action Required
+                        </span>
+</div>
+<p class="text-label-sm text-on-surface-variant/70 mt-2">Requires counseling sessions</p>
+</div>
+</div>
+<!-- Data Visualization Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-stack-md mb-stack-lg">
+<div class="lg:col-span-2 glass-card rounded-2xl p-stack-lg relative min-h-[400px]" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 30px;">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h4 class="font-headline-sm text-primary">Attendance Trends</h4>
+<p class="text-label-sm text-on-surface-variant">Daily fluctuations across all programs</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-xs font-label-bold">Actual</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-vibrant-green"></span>
+<span class="text-xs font-label-bold">Target</span>
+</div>
+</div>
+</div>
+<!-- Simulated Chart Area -->
+<div class="relative h-64 w-full flex items-end justify-between gap-1 mt-auto">
+<div class="w-full h-full absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
+<div class="w-full h-[1px] bg-on-surface-variant"></div>
+<div class="w-full h-[1px] bg-on-surface-variant"></div>
+<div class="w-full h-[1px] bg-on-surface-variant"></div>
+<div class="w-full h-[1px] bg-on-surface-variant"></div>
+</div>
+<!-- Bars with hover effect -->
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t h-[70%] group relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded">70%</div>
+</div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t h-[85%] group relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded">85%</div>
+</div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t h-[92%] group relative">
+<div class="opacity-0 group-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] px-2 py-1 rounded">92%</div>
+</div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t h-[80%] group relative"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t h-[95%] group relative"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t h-[88%] group relative"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t h-[75%] group relative"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t h-[90%] group relative"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t h-[94%] group relative"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t h-[82%] group relative"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t h-[88%] group relative"></div>
+<div class="flex-1 bg-primary/20 hover:bg-primary/40 transition-colors rounded-t h-[98%] group relative"></div>
+</div>
+<div class="flex justify-between text-[10px] font-bold text-on-surface-variant mt-4 px-2">
+<span class="">WK 1</span><span class="">WK 2</span><span class="">WK 3</span><span class="">WK 4</span><span class="">WK 5</span><span class="">WK 6</span><span class="">WK 7</span><span class="">WK 8</span><span class="">WK 9</span><span class="">WK 10</span><span class="">WK 11</span><span class="">WK 12</span>
+</div>
+</div>
+<!-- Distribution Glass Card -->
+<div class="glass-card rounded-2xl p-stack-lg">
+<h4 class="font-headline-sm text-primary mb-6">Classroom Split</h4>
+<div class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between font-label-bold text-label-bold">
+<span class="">Python Beginners</span>
+<span class="text-primary">88%</span>
+</div>
+<div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[88%] rounded-full"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-bold text-label-bold">
+<span class="">UI/UX Design</span>
+<span class="text-secondary">94%</span>
+</div>
+<div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[94%] rounded-full"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-bold text-label-bold">
+<span class="">Blockchain Core</span>
+<span class="text-energetic-orange">72%</span>
+</div>
+<div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-energetic-orange w-[72%] rounded-full"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between font-label-bold text-label-bold">
+<span class="">Cloud Computing</span>
+<span class="text-primary">91%</span>
+</div>
+<div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[91%] rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-glass-border/30">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-vibrant-green/10 flex items-center justify-center text-vibrant-green">
+<span class="material-symbols-outlined">insights</span>
+</div>
+<div>
+<p class="text-xs font-bold uppercase text-on-surface-variant">System Insight</p>
+<p class="text-sm font-medium">Morning sessions show 12% higher attendance than evening sessions.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Table Section -->
+<div class="glass-card rounded-2xl overflow-hidden shadow-xl mb-stack-lg" style="box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 30px;">
+<div class="p-stack-lg border-b border-glass-border/30 flex items-center justify-between">
+<h4 class="font-headline-sm text-primary">Student Attendance Breakdown</h4>
+<div class="flex items-center gap-4">
+<button class="text-sm font-label-bold text-on-surface-variant hover:text-primary flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">filter_list</span>
+                            Filter
+                        </button>
+<button class="text-sm font-label-bold text-on-surface-variant hover:text-primary flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">sort</span>
+                            Sort
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-on-surface-variant font-label-bold text-label-bold border-b border-glass-border/20">
+<tr>
+<th class="px-6 py-4">Student Name</th>
+<th class="px-6 py-4">Classroom</th>
+<th class="px-6 py-4 text-center">Sessions</th>
+<th class="px-6 py-4 text-center">Attended</th>
+<th class="px-6 py-4 text-center">Absent</th>
+<th class="px-6 py-4 text-center">Excused</th>
+<th class="px-6 py-4 text-right">Attendance %</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-glass-border/20">
+<!-- Row 1 -->
+<tr class="hover:bg-white/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary text-xs">AJ</div>
+<div>
+<p class="font-bold text-primary">Alex Johnson</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Fullstack JS</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-medium">B2 - Advanced</td>
+<td class="px-6 py-4 text-center">48</td>
+<td class="px-6 py-4 text-center font-bold">46</td>
+<td class="px-6 py-4 text-center">2</td>
+<td class="px-6 py-4 text-center">2</td>
+<td class="px-6 py-4 text-right">
+<span class="px-3 py-1 bg-vibrant-green/10 text-vibrant-green rounded-full font-bold text-xs">95.8%</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-white/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-energetic-orange/10 flex items-center justify-center font-bold text-energetic-orange text-xs">SM</div>
+<div>
+<p class="font-bold text-primary">Sarah Miller</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Intro Python</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-medium">A1 - Fundamentals</td>
+<td class="px-6 py-4 text-center">48</td>
+<td class="px-6 py-4 text-center font-bold text-error">32</td>
+<td class="px-6 py-4 text-center font-bold text-error">16</td>
+<td class="px-6 py-4 text-center">1</td>
+<td class="px-6 py-4 text-right">
+<span class="px-3 py-1 bg-error/10 text-error rounded-full font-bold text-xs">66.7%</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-white/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center font-bold text-secondary text-xs">DC</div>
+<div>
+<p class="font-bold text-primary">David Chen</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Data Structures</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-medium">C1 - Core</td>
+<td class="px-6 py-4 text-center">48</td>
+<td class="px-6 py-4 text-center font-bold">40</td>
+<td class="px-6 py-4 text-center">8</td>
+<td class="px-6 py-4 text-center">4</td>
+<td class="px-6 py-4 text-right">
+<span class="px-3 py-1 bg-energetic-orange/10 text-energetic-orange rounded-full font-bold text-xs">83.3%</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-white/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary text-xs">EL</div>
+<div>
+<p class="font-bold text-primary">Emma Larsson</p>
+<p class="text-[10px] text-on-surface-variant uppercase">React Pro</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-medium">B2 - Advanced</td>
+<td class="px-6 py-4 text-center">48</td>
+<td class="px-6 py-4 text-center font-bold">47</td>
+<td class="px-6 py-4 text-center">1</td>
+<td class="px-6 py-4 text-center">0</td>
+<td class="px-6 py-4 text-right">
+<span class="px-3 py-1 bg-vibrant-green/10 text-vibrant-green rounded-full font-bold text-xs">97.9%</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 bg-surface-container-lowest/50 border-t border-glass-border/30 flex items-center justify-between">
+<p class="text-label-sm text-on-surface-variant">Showing 1-10 of 248 students</p>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-xl border border-glass-border flex items-center justify-center hover:bg-surface-variant transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center shadow-md">1</button>
+<button class="w-10 h-10 rounded-xl border border-glass-border flex items-center justify-center hover:bg-surface-variant transition-colors">2</button>
+<button class="w-10 h-10 rounded-xl border border-glass-border flex items-center justify-center hover:bg-surface-variant transition-colors">3</button>
+<button class="w-10 h-10 rounded-xl border border-glass-border flex items-center justify-center hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Component -->
+<footer class="mt-auto border-t border-glass-border/50 py-stack-md ml-72 px-gutter flex justify-between items-center text-on-surface-variant/60">
+<div class="flex items-center gap-4">
+<span class="font-label-sm text-label-sm">© 2024 Code Geek Academy | Kinetic Glass Tech Framework</span>
+</div>
+<div class="flex gap-stack-lg">
+<a class="font-label-sm text-label-sm hover:text-vibrant-green transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm hover:text-vibrant-green transition-colors" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm hover:text-vibrant-green transition-colors" href="#">API Documentation</a>
+</div>
+</footer>
+</main>
+<!-- Micro-interactions Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dropdown interaction simulation
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => {
+                select.addEventListener('change', () => {
+                    select.classList.add('scale-95');
+                    setTimeout(() => select.classList.remove('scale-95'), 150);
+                });
+            });
+
+            // Card hover lift effect (CSS handled mostly, adding js for dynamic shadow shift if needed)
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.boxShadow = '0 20px 40px rgba(0, 32, 69, 0.1)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.05)';
+                });
+            });
+        });
+    </script>
+
+
+</body></html>

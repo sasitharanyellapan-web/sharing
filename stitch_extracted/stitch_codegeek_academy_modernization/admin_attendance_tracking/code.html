@@ -1,0 +1,659 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Attendance Tracking | Code Geek Academy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Montserrat:wght@600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "primary-container": "#1a365d",
+                "surface-variant": "#e0e3e5",
+                "secondary-fixed-dim": "#6bdc96",
+                "surface-dim": "#d7dadc",
+                "on-tertiary-fixed-variant": "#703700",
+                "surface-container-high": "#e5e9eb",
+                "on-secondary-container": "#00723f",
+                "on-primary-fixed-variant": "#2d476f",
+                "error-container": "#ffdad6",
+                "on-primary-container": "#86a0cd",
+                "on-tertiary-fixed": "#301400",
+                "inverse-primary": "#adc7f7",
+                "on-primary-fixed": "#001b3c",
+                "on-error": "#ffffff",
+                "secondary-container": "#85f6ad",
+                "surface": "#f7fafc",
+                "tertiary-container": "#572900",
+                "on-primary": "#ffffff",
+                "inverse-on-surface": "#eef1f3",
+                "primary-fixed-dim": "#adc7f7",
+                "surface-tint": "#455f88",
+                "on-tertiary-container": "#e88532",
+                "error": "#ba1a1a",
+                "glass-surface": "rgba(255, 255, 255, 0.7)",
+                "secondary-fixed": "#88f9b0",
+                "on-secondary-fixed-variant": "#00522c",
+                "tertiary-fixed": "#ffdcc5",
+                "tertiary": "#371800",
+                "energetic-orange": "#ED8936",
+                "on-background": "#181c1e",
+                "inverse-surface": "#2d3133",
+                "tertiary-fixed-dim": "#ffb783",
+                "glass-border": "rgba(255, 255, 255, 0.4)",
+                "surface-container-low": "#f1f4f6",
+                "deep-navy": "#1A365D",
+                "outline-variant": "#c4c6cf",
+                "on-surface": "#181c1e",
+                "on-surface-variant": "#43474e",
+                "vibrant-green": "#48BB78",
+                "surface-bright": "#f7fafc",
+                "primary": "#002045",
+                "surface-container": "#ebeef0",
+                "surface-container-highest": "#e0e3e5",
+                "secondary": "#006d3c",
+                "on-secondary": "#ffffff",
+                "surface-container-lowest": "#ffffff",
+                "background": "#f7fafc",
+                "on-error-container": "#93000a",
+                "outline": "#74777f",
+                "on-tertiary": "#ffffff",
+                "primary-fixed": "#d6e3ff",
+                "on-secondary-fixed": "#00210f"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "container-max": "1280px",
+                "margin-mobile": "20px",
+                "section-gap": "120px",
+                "stack-sm": "8px",
+                "stack-lg": "32px",
+                "gutter": "24px",
+                "stack-md": "16px"
+            },
+            "fontFamily": {
+                "label-bold": ["Inter"],
+                "headline-sm": ["Montserrat"],
+                "display-lg-mobile": ["Montserrat"],
+                "body-lg": ["Inter"],
+                "display-lg": ["Montserrat"],
+                "label-sm": ["Inter"],
+                "headline-md": ["Montserrat"],
+                "body-md": ["Inter"]
+            },
+            "fontSize": {
+                "label-bold": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                "display-lg-mobile": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7fafc;
+            color: #181c1e;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(26, 54, 93, 0.1);
+        }
+
+        .attendance-cell {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .attendance-cell:active {
+            transform: scale(0.9);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1A365D;
+            border-radius: 10px;
+        }
+
+        .gradient-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(26, 54, 93, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(72, 187, 120, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(237, 137, 54, 0.02) 0%, transparent 50%);
+        }
+
+        .attendance-btn {
+            @apply flex items-center justify-center w-8 h-8 rounded-full font-bold transition-all duration-200 cursor-pointer;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-secondary-container">
+<div class="gradient-mesh"></div>
+<!-- SideNavBar (Shared Component) -->
+<nav class="h-screen w-72 flex-col fixed left-0 top-0 border-r border-glass-border bg-surface-container-lowest/70 backdrop-blur-xl z-50 flex p-stack-lg shadow-md shadow-primary/5">
+<div class="flex items-center gap-stack-md mb-stack-lg">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white overflow-hidden">
+<img class="object-cover w-full h-full" data-alt="A professional and sleek minimalist logo for an elite coding academy called Code Geek. The logo features abstract geometric shapes forming a stylized 'G' and 'C' in deep navy blue and vibrant emerald green colors. The style is clean, corporate modern, and highly technical, reflecting a premium educational brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA48fMXnmuogF4WsY_mtr_fJlIVh8cYgDvjwTfM5uXPsSTnOqVWzEQGzSUFdFKXpmuqVVsF3Jr1Nu0h4Cq_wKS8Tmu6zbkcgte518CH9E3rLqFORjHfMQeM-Ee_bAlSRyp4V2qWoHm6NeqANAWXD1COPmmZhXw_ngSUnBkauw_WkF1pOowg4IS64cJDkuzvu0fqgWcyIe436NHUmMqL5iVg3tja0Avdx5PZ-qWc1LmezQ2jQayw9j56uv8Eiuze6rrZllLew6R2U3bn">
+</div>
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Code Geek Admin</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Management Portal</p>
+</div>
+</div>
+<div class="flex flex-col gap-1 flex-1">
+<!-- Active Navigation Logic: Students is closest to Attendance -->
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary hover:translate-x-1 hover:bg-surface-variant/50 transition-all duration-300 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-bold text-label-bold">Dashboard</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary hover:translate-x-1 hover:bg-surface-variant/50 transition-all duration-300 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="dynamic_form">dynamic_form</span>
+<span class="font-label-bold text-label-bold">Form Builder</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary hover:translate-x-1 hover:bg-surface-variant/50 transition-all duration-300 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-bold text-label-bold">Classrooms</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md bg-secondary-container text-on-secondary-container rounded-xl transition-all duration-300 scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="person_search" style="font-variation-settings: 'FILL' 1;">person_search</span>
+<span class="font-label-bold text-label-bold">Students</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant hover:text-primary hover:translate-x-1 hover:bg-surface-variant/50 transition-all duration-300 rounded-xl" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-bold text-label-bold">Settings</span>
+</a>
+</div>
+<button class="mt-stack-lg bg-primary text-white py-3 px-gutter rounded-full font-label-bold text-label-bold shadow-lg hover:scale-105 transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+            New Registration
+        </button>
+<div class="mt-stack-lg pt-stack-lg border-t border-glass-border flex flex-col gap-1">
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant/60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-label-bold text-label-bold">Support</span>
+</a>
+<a class="flex items-center gap-stack-md px-gutter py-stack-md text-on-surface-variant/60 hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-bold text-label-bold">Sign Out</span>
+</a>
+</div>
+</nav>
+<!-- TopAppBar (Shared Component) -->
+<header class="flex justify-between items-center px-gutter w-[calc(100%-18rem)] ml-72 sticky top-0 z-40 h-16 bg-surface/80 backdrop-blur-md border-b border-glass-border">
+<div class="flex items-center gap-stack-md">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 group-focus-within:text-vibrant-green transition-colors" data-icon="search">search</span>
+<input class="bg-surface-container-low border border-glass-border rounded-full py-1.5 pl-10 pr-4 w-64 focus:ring-2 focus:ring-vibrant-green focus:border-vibrant-green transition-all font-body-md outline-none" placeholder="Search student records..." type="text">
+</div>
+</div>
+<div class="flex items-center gap-stack-lg">
+<div class="flex items-center gap-stack-md">
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</button>
+</div>
+<div class="flex items-center gap-3 pl-stack-md border-l border-glass-border">
+<div class="text-right">
+<p class="font-label-bold text-label-bold text-primary">Alex Mercer</p>
+<p class="text-[10px] uppercase tracking-wider text-on-surface-variant">Admin Principal</p>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-primary/20 p-0.5">
+<img class="w-full h-full object-cover rounded-full" data-alt="A portrait of a confident, professional male educational administrator in his 40s. He has a warm smile and is wearing modern business casual attire. The background is a brightly lit, sophisticated office with blurred tech gadgets. The lighting is soft and airy, creating a high-end corporate modern look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9VLBB3x-g0FYvhaY2wDqBe_m40XPssEKP_CWKRFpDggiZDrwhdyvNVZHs0ij9Mweq4TJ_KKSFobB1-CHnNciK_5pw5rgutD9q5zQC75FLi2QQ9Zpzt_6aPo07xVhqNBJJLoM5KBn4CBfUlXug2OMcX55guo3qugV2vGqUHGdRI4ixOk2nsbyFXe1k56mwjAX5gzPA8wzer4Kw0xKyAoaSAm6GLkcbFacoGnkvlDTGa333m_VurXdlVOjrGKxJORyI0k1QDG1dnzxK">
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-72 p-stack-lg min-h-[calc(100vh-4rem-60px)]">
+<!-- Header Section -->
+<section class="mb-stack-lg flex flex-col md:flex-row md:items-end justify-between gap-stack-md">
+<div>
+<nav class="flex items-center gap-2 text-label-sm text-on-surface-variant/60 mb-2">
+<span class="">Students</span>
+<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+<span class="">Class Attendance</span>
+</nav>
+<h2 class="font-headline-md text-headline-md text-primary">AttendanceTracking</h2>
+<p class="text-on-surface-variant max-w-2xl mt-2"><br></p>
+</div>
+<div class="flex gap-stack-sm">
+
+<button class="flex items-center gap-2 px-5 py-2.5 bg-white/30 border border-glass-border text-on-surface-variant rounded-full font-label-bold text-label-bold hover:bg-surface-variant/50 transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="summarize">summarize</span>
+View Report
+</button><button class="flex items-center gap-2 px-5 py-2.5 bg-white border border-glass-border text-primary rounded-full font-label-bold text-label-bold hover:bg-surface-variant/30 transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+                    Export CSV
+                </button>
+</div>
+</section>
+<!-- Stats Overview -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-stack-md mb-stack-lg">
+<div class="glass-card p-stack-md rounded-2xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Total Students</p>
+<p class="font-headline-sm text-headline-sm text-primary">24</p>
+</div>
+</div>
+<div class="glass-card p-stack-md rounded-2xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-vibrant-green/10 flex items-center justify-center text-vibrant-green">
+<span class="material-symbols-outlined" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Avg. Presence</p>
+<p class="font-headline-sm text-headline-sm text-primary">92%</p>
+</div>
+</div>
+<div class="glass-card p-stack-md rounded-2xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-energetic-orange/10 flex items-center justify-center text-energetic-orange">
+<span class="material-symbols-outlined" data-icon="error" style="font-variation-settings: 'FILL' 1;">error</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Reasoned Absences</p>
+<p class="font-headline-sm text-headline-sm text-primary">12</p>
+</div>
+</div>
+<div class="glass-card p-stack-md rounded-2xl flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined" data-icon="cancel" style="font-variation-settings: 'FILL' 1;">cancel</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Critical Absences</p>
+<p class="font-headline-sm text-headline-sm text-primary">3</p>
+</div>
+</div>
+</section><section class="flex flex-wrap items-center gap-stack-md mb-stack-lg">
+  <div class="relative min-w-[240px]">
+    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 pointer-events-none" data-icon="school">school</span>
+    <select class="w-full bg-white/70 backdrop-blur-md border border-glass-border rounded-full py-2.5 pl-10 pr-10 appearance-none font-label-bold text-label-bold text-primary focus:ring-2 focus:ring-vibrant-green focus:border-vibrant-green transition-all outline-none cursor-pointer">
+      <option value="fullstack-q3">Full-Stack Bootcamp (Q3)</option>
+      <option value="frontend-q2">Frontend Mastery (Q2)</option>
+      <option value="backend-q4">Backend Architecture (Q4)</option>
+      <option value="uiux-q1">UI/UX Design (Q1)</option>
+    </select>
+    <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant/50 pointer-events-none" data-icon="expand_more">expand_more</span>
+  </div>
+  <div class="relative group">
+    <button class="flex items-center gap-2 px-5 py-2.5 bg-secondary text-white rounded-full font-label-bold text-label-bold hover:scale-105 active:scale-95 transition-all shadow-md shadow-secondary/20" id="addDateBtn">
+      <span class="material-symbols-outlined text-[20px]" data-icon="calendar_month">calendar_month</span>
+      Add Date
+    </button>
+    <div class="absolute left-0 mt-2 w-72 glass-card rounded-2xl p-stack-md shadow-xl z-50 opacity-0 invisible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-300">
+      <div class="flex justify-between items-center mb-4">
+        <span class="font-label-bold text-primary">November 2024</span>
+        <div class="flex gap-2">
+          <button class="p-1 hover:bg-surface-variant/50 rounded-full transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+          <button class="p-1 hover:bg-surface-variant/50 rounded-full transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+        </div>
+      </div>
+      <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-on-surface-variant/60 mb-2">
+        <div class="">SU</div><div class="">MO</div><div class="">TU</div><div class="">WE</div><div class="">TH</div><div class="">FR</div><div class="">SA</div>
+      </div>
+      <div class="grid grid-cols-7 gap-1">
+        <div class="p-2 text-xs text-on-surface-variant/30">27</div>
+        <div class="p-2 text-xs text-on-surface-variant/30">28</div>
+        <div class="p-2 text-xs text-on-surface-variant/30">29</div>
+        <div class="p-2 text-xs text-on-surface-variant/30">30</div>
+        <div class="p-2 text-xs text-on-surface-variant/30">31</div>
+        <button class="p-2 text-xs hover:bg-vibrant-green/20 rounded-lg transition-colors">1</button>
+        <button class="p-2 text-xs hover:bg-vibrant-green/20 rounded-lg transition-colors">2</button>
+        <button class="p-2 text-xs hover:bg-vibrant-green/20 rounded-lg transition-colors">3</button>
+        <button class="p-2 text-xs bg-secondary text-white rounded-lg font-bold">4</button>
+        <button class="p-2 text-xs hover:bg-vibrant-green/20 rounded-lg transition-colors">5</button>
+        <button class="p-2 text-xs hover:bg-vibrant-green/20 rounded-lg transition-colors">6</button>
+        <button class="p-2 text-xs hover:bg-vibrant-green/20 rounded-lg transition-colors">7</button>
+        <button class="p-2 text-xs hover:bg-vibrant-green/20 rounded-lg transition-colors">8</button>
+        <button class="p-2 text-xs hover:bg-vibrant-green/20 rounded-lg transition-colors">9</button>
+        <button class="p-2 text-xs hover:bg-vibrant-green/20 rounded-lg transition-colors">10</button>
+      </div>
+      <div class="mt-4 pt-4 border-t border-glass-border flex justify-end">
+        <button class="text-label-sm text-secondary font-bold hover:underline">Select Today</button>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Attendance Table -->
+<section class="glass-card rounded-3xl overflow-hidden shadow-xl shadow-primary/5">
+<div class="p-stack-md border-b border-glass-border flex justify-between items-center bg-white/30">
+<div class="flex gap-4">
+<div class="flex items-center gap-2 px-3 py-1 bg-vibrant-green/10 text-vibrant-green rounded-full text-label-sm font-bold">
+<span class="w-2 h-2 rounded-full bg-vibrant-green"></span>
+                        / Present
+                    </div>
+<div class="flex items-center gap-2 px-3 py-1 bg-error/10 text-error rounded-full text-label-sm font-bold">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+                        X Absent
+                    </div>
+<div class="flex items-center gap-2 px-3 py-1 bg-energetic-orange/10 text-energetic-orange rounded-full text-label-sm font-bold">
+<span class="w-2 h-2 rounded-full bg-energetic-orange"></span>
+                        R Reasoned
+                    </div>
+</div>
+<div class="text-label-sm text-on-surface-variant">
+                    Showing 24 of 24 students
+                </div>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="p-gutter sticky left-0 z-20 bg-surface-container-low/90 backdrop-blur-md min-w-[280px] border-r border-glass-border">
+<span class="font-label-bold text-label-bold text-primary">Student Name &amp; ID</span>
+</th>
+<th class="p-gutter text-center border-r border-glass-border min-w-[100px]">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Oct 24</p>
+<p class="font-label-bold text-label-bold text-primary">Mon</p>
+</th>
+<th class="p-gutter text-center border-r border-glass-border min-w-[100px]">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Oct 26</p>
+<p class="font-label-bold text-label-bold text-primary">Wed</p>
+</th>
+<th class="p-gutter text-center border-r border-glass-border min-w-[100px]">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Oct 28</p>
+<p class="font-label-bold text-label-bold text-primary">Fri</p>
+</th>
+<th class="p-gutter text-center border-r border-glass-border min-w-[100px]">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Oct 31</p>
+<p class="font-label-bold text-label-bold text-primary">Mon</p>
+</th>
+<th class="p-gutter text-center border-r border-glass-border min-w-[100px]">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Nov 02</p>
+<p class="font-label-bold text-label-bold text-primary">Wed</p>
+</th>
+<th class="p-gutter text-center border-r border-glass-border min-w-[100px] bg-secondary-container/10">
+<p class="text-[10px] text-on-secondary-container uppercase tracking-tighter font-bold">Today</p>
+<p class="font-label-bold text-label-bold text-primary">Nov 04</p>
+</th>
+<!-- Container for dynamic columns -->
+<th id="dynamicColumnsHeader"></th>
+<th class="p-gutter text-center border-r border-glass-border min-w-[100px]">
+                <p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Jul 03</p>
+                <p class="font-label-bold text-label-bold text-primary">Fri</p>
+            </th><th class="p-gutter text-center border-r border-glass-border min-w-[100px]">
+                <p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Jul 03</p>
+                <p class="font-label-bold text-label-bold text-primary">Fri</p>
+            </th><th class="p-gutter text-center border-r border-glass-border min-w-[100px]">
+                <p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Jul 03</p>
+                <p class="font-label-bold text-label-bold text-primary">Fri</p>
+            </th></tr>
+</thead>
+<tbody id="attendanceBody">
+<!-- Student Row 1 -->
+<tr class="border-b border-glass-border hover:bg-surface-container/30 transition-colors">
+<td class="p-gutter sticky left-0 z-20 bg-white/90 backdrop-blur-md border-r border-glass-border">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary-container flex items-center justify-center text-white font-bold text-xs">
+                                        JS
+                                    </div>
+<div>
+<p class="font-label-bold text-label-bold text-primary">Jordan Smith</p>
+<p class="text-label-sm text-on-surface-variant">UID: 2024-8821</p>
+</div>
+</div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-vibrant-green/20 text-vibrant-green" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-vibrant-green/20 text-vibrant-green" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-energetic-orange/20 text-energetic-orange" onclick="toggleCell(this)">R</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-error/20 text-error" onclick="toggleCell(this)">X</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-energetic-orange/20 text-energetic-orange" onclick="toggleCell(this)">R</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border bg-secondary-container/5">
+<div class="flex justify-center"><button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+                    <div class="flex justify-center">
+                        <button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button>
+                    </div>
+                </td><td class="p-gutter text-center border-r border-glass-border">
+                    <div class="flex justify-center">
+                        <button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button>
+                    </div>
+                </td><td class="p-gutter text-center border-r border-glass-border">
+                    <div class="flex justify-center">
+                        <button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button>
+                    </div>
+                </td></tr>
+<!-- Student Row 2 -->
+<tr class="border-b border-glass-border hover:bg-surface-container/30 transition-colors">
+<td class="p-gutter sticky left-0 z-20 bg-white/90 backdrop-blur-md border-r border-glass-border">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gradient-to-br from-secondary to-vibrant-green flex items-center justify-center text-white font-bold text-xs">
+                                        EM
+                                    </div>
+<div>
+<p class="font-label-bold text-label-bold text-primary">Elena Martinez</p>
+<p class="text-label-sm text-on-surface-variant">UID: 2024-9104</p>
+</div>
+</div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-vibrant-green/20 text-vibrant-green" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-vibrant-green/20 text-vibrant-green" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-vibrant-green/20 text-vibrant-green" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-vibrant-green/20 text-vibrant-green" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-vibrant-green/20 text-vibrant-green" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border bg-secondary-container/5">
+<div class="flex justify-center"><button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+                    <div class="flex justify-center">
+                        <button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button>
+                    </div>
+                </td><td class="p-gutter text-center border-r border-glass-border">
+                    <div class="flex justify-center">
+                        <button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button>
+                    </div>
+                </td><td class="p-gutter text-center border-r border-glass-border">
+                    <div class="flex justify-center">
+                        <button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button>
+                    </div>
+                </td></tr>
+<!-- Student Row 3 -->
+<tr class="border-b border-glass-border hover:bg-surface-container/30 transition-colors">
+<td class="p-gutter sticky left-0 z-20 bg-white/90 backdrop-blur-md border-r border-glass-border">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gradient-to-br from-energetic-orange to-tertiary-container flex items-center justify-center text-white font-bold text-xs">
+                                        LO
+                                    </div>
+<div>
+<p class="font-label-bold text-label-bold text-primary">Liam O'Connor</p>
+<p class="text-label-sm text-on-surface-variant">UID: 2024-7732</p>
+</div>
+</div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-vibrant-green/20 text-vibrant-green" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-error/20 text-error" onclick="toggleCell(this)">X</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-vibrant-green/20 text-vibrant-green" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-vibrant-green/20 text-vibrant-green" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+<div class="flex justify-center"><button class="attendance-btn bg-error/20 text-error" onclick="toggleCell(this)">X</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border bg-secondary-container/5">
+<div class="flex justify-center"><button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button></div>
+</td>
+<td class="p-gutter text-center border-r border-glass-border">
+                    <div class="flex justify-center">
+                        <button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button>
+                    </div>
+                </td><td class="p-gutter text-center border-r border-glass-border">
+                    <div class="flex justify-center">
+                        <button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button>
+                    </div>
+                </td><td class="p-gutter text-center border-r border-glass-border">
+                    <div class="flex justify-center">
+                        <button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button>
+                    </div>
+                </td></tr>
+</tbody>
+</table>
+</div>
+<div class="p-gutter flex justify-between items-center bg-surface-container-low/50">
+<button class="text-label-bold text-on-surface-variant hover:text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="keyboard_arrow_left">keyboard_arrow_left</span>
+                    Previous Students
+                </button>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-full bg-primary text-white font-bold text-xs">1</button>
+<button class="w-8 h-8 rounded-full hover:bg-surface-variant/50 text-on-surface-variant font-bold text-xs">2</button>
+<button class="w-8 h-8 rounded-full hover:bg-surface-variant/50 text-on-surface-variant font-bold text-xs">3</button>
+</div>
+<button class="text-label-bold text-on-surface-variant hover:text-primary flex items-center gap-2">
+                    Next Students
+                    <span class="material-symbols-outlined text-[20px]" data-icon="keyboard_arrow_right">keyboard_arrow_right</span>
+</button>
+</div>
+</section>
+<!-- Tooltip Guide -->
+<section class="mt-stack-lg p-stack-md glass-card rounded-2xl flex items-start gap-4">
+<span class="material-symbols-outlined text-vibrant-green" data-icon="info" style="font-variation-settings: 'FILL' 1;">info</span>
+<div>
+<h4 class="font-label-bold text-label-bold text-primary">Administrator Tip</h4>
+<p class="text-label-sm text-on-surface-variant mt-1">To quickly mark all as present, right-click the date header. The system automatically reconciles attendance with the LMS portal every 6 hours.</p>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="flex justify-between items-center px-gutter max-w-container-max ml-72 py-stack-md border-t border-glass-border/50 text-on-surface-variant/60 font-label-sm text-label-sm">
+<div class="">© 2024 Code Geek Academy | Kinetic Glass Tech Framework</div>
+<div class="flex gap-stack-lg">
+<a class="hover:text-vibrant-green transition-opacity duration-200" href="#">Privacy Policy</a>
+<a class="hover:text-vibrant-green transition-opacity duration-200" href="#">Terms of Service</a>
+<a class="hover:text-vibrant-green transition-opacity duration-200" href="#">API Documentation</a>
+</div>
+</footer>
+<script>
+        // Attendance Toggle Logic
+        function toggleCell(btn) {
+            const symbols = [
+                { char: '/', colorClass: 'bg-vibrant-green/20 text-vibrant-green' },
+                { char: 'X', colorClass: 'bg-error/20 text-error' },
+                { char: 'R', colorClass: 'bg-energetic-orange/20 text-energetic-orange' },
+                { char: ' ', colorClass: 'bg-surface-variant text-on-surface-variant' }
+            ];
+            
+            let currentIndex = symbols.findIndex(s => s.char === btn.innerText.trim() || (s.char === ' ' && btn.innerText.trim() === '/'));
+            if (btn.innerText.trim() === '/') currentIndex = 0; // Handle initial state correctly
+
+            let nextIndex = (currentIndex + 1) % symbols.length;
+            let nextSymbol = symbols[nextIndex];
+
+            btn.innerText = nextSymbol.char === ' ' ? '/' : nextSymbol.char;
+            btn.className = 'attendance-btn ' + nextSymbol.colorClass;
+
+            // Simple visual feedback
+            btn.classList.add('scale-110');
+            setTimeout(() => btn.classList.remove('scale-110'), 200);
+        }
+
+        // Add Date Column Logic
+        document.getElementById('addDateBtn').addEventListener('click', () => {
+            const table = document.querySelector('table');
+            const headerRow = table.querySelector('thead tr');
+            const bodyRows = table.querySelectorAll('tbody tr');
+            
+            // Generate dummy next date
+            const today = new Date();
+            const nextDate = new Date(today);
+            nextDate.setDate(today.getDate() + 1);
+            const dateStr = nextDate.toLocaleDateString('en-US', { month: 'short', day: '2-digit' });
+            const dayStr = nextDate.toLocaleDateString('en-US', { weekday: 'short' });
+
+            // Create Header Cell
+            const th = document.createElement('th');
+            th.className = 'p-gutter text-center border-r border-glass-border min-w-[100px] animate-pulse';
+            th.innerHTML = `
+                <p class="text-[10px] text-on-surface-variant uppercase tracking-tighter">${dateStr}</p>
+                <p class="font-label-bold text-label-bold text-primary">${dayStr}</p>
+            `;
+            headerRow.appendChild(th);
+
+            // Create Body Cells
+            bodyRows.forEach(row => {
+                const td = document.createElement('td');
+                td.className = 'p-gutter text-center border-r border-glass-border';
+                td.innerHTML = `
+                    <div class="flex justify-center">
+                        <button class="attendance-btn bg-surface-variant text-on-surface-variant hover:bg-vibrant-green/20" onclick="toggleCell(this)">/</button>
+                    </div>
+                `;
+                row.appendChild(td);
+            });
+
+            // Smooth scroll to the end of the table
+            const scrollContainer = table.parentElement;
+            scrollContainer.scrollTo({ left: scrollContainer.scrollWidth, behavior: 'smooth' });
+            
+            setTimeout(() => th.classList.remove('animate-pulse'), 1000);
+        });
+    </script>
+
+
+</body></html>
