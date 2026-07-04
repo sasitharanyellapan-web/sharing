@@ -101,7 +101,7 @@
             box-shadow: 0 4px 30px rgba(0, 32, 69, 0.05);
         }
         .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-variation-settings: 'FILL\' 0, 'wght\' 400, 'GRAD\' 0, 'opsz\' 24;
         }
         .hover-lift {
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
